@@ -11,10 +11,10 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('deploy', function (target) {
+  grunt.registerTask('deploy', function () {
     var deploy = process.env.DEPLOY && process.env.DEPLOY || '',
+    target = process.env.TARGET && process.env.TARGET || '';
     config;
-    target = target && target || '';
     if ( deploy === '' ) {
       return false;
     }l
