@@ -1,0 +1,22 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+#frontend ignored folders/files
+dist
+node_modules
+.tmp
+app/bower_components
+
+#vagrant
+.vagrant
