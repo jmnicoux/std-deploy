@@ -14,7 +14,7 @@ module.exports = function(grunt) {
   grunt.registerTask('deploy', function () {
     var deploy = process.env.DEPLOY && process.env.DEPLOY || '',
     build_env = process.env.BUILD_ENV && process.env.BUILD_ENV || 'deployment',
-    target = process.env.TARGET && process.env.TARGET || '';
+    target = process.env.TARGET && process.env.TARGET || '',
     config;
     if ( deploy === '' ) {
       return false;
