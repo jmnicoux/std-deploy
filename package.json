@@ -9,7 +9,7 @@
     "time-grunt": "~0.1.1",
     "grunt-ssh": "~0.10.0",
     "shelljs": "~0.2.6",
-    "grunt-sftp-deploy": "git://github.com/jmnicoux/grunt-sftp-deploy.git#1f19ae0"
+    "grunt-sftp-deploy": "git://github.com/jmnicoux/grunt-sftp-deploy.git#0c4c1bf"
   },
   "company": "MOOD:",
   "name": "deployment",

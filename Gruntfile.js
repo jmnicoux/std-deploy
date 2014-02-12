@@ -6,6 +6,8 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     // Task configuration.
+    sshconfig: {
+    },
     'sftp-deploy': {
     },
     sshexec: {
@@ -16,7 +18,7 @@ module.exports = function(grunt) {
     var deploy = process.env.DEPLOY && process.env.DEPLOY || '',
     build_env = process.env.BUILD_ENV && process.env.BUILD_ENV || 'deployment',
     target = process.env.TARGET && process.env.TARGET || '',
-    configs, elements;
+    configs, sftpelements, sshelements;
     if ( deploy === '' ) {
       return false;
     }
@@ -24,37 +26,43 @@ module.exports = function(grunt) {
     if ( !sshlist ) {
       return false;
     }
-    if ( target !== '' && sshlist[target] ) {
-      configs = [ target ];
-      if( !configs ) {
-        return false;
-      }
-      elements = {};
-      elements[target] = sshlist[target];
-    } else if ( target !== '' ) {
+    if ( !sshlist.sshconfig ) {
       return false;
-    } else {
-      configs = Object.keys(sshlist);
-      if ( !configs ) {
-        return false;
-      }
-      elements = sshlist;
     }
-    
+    if( !sshlist['sftp-deploy'] && !sshlist.sshexec) {
+      return false;
+    }
+
+    grunt.config.set('sshconfig', sshlist.sshconfig);
+    if ( sshlist['sftp-deploy'] ) {
+      sftpelements = Object.keys(sshlist['sftp-deploy']);
+      grunt.config.set('sftp-deploy', sshlist['sftp-deploy']);
+    }
+    if ( sshlist.sshexec ) {
+      sshelements = Object.keys(sshlist.sshexec);
+      grunt.config.set('sshexec', sshlist.sshexec);
+    }
+    configs = Object.keys(sshlist.sshconfig);
+    if ( target !== '' && !configs[target] ) {
+      return false;
+    }
+
+    if ( target !== '' ) {
+      configs = [ target ];
+    }
+
     configs.forEach(function(config) {
-      var tasks = Object.keys(elements[config]);
-      var tasksresult = true;
-      tasks.forEach(function(task) {
-        var details = Object.keys(elements[config][task])
-        grunt.config.set(task, elements[config][task]);
-        details.forEach(function(value){
-          var res;
-          res = grunt.task.run(task +':' + value);
-          if ( !res ) {
-            grunt.fail.warn(new Error('Configuration:' + config + ' task ' + task + ' with value ' + value + 'failed !'));
-          }
+      grunt.option('config', config);
+      if ( sftpelements ) {
+        sftpelements.forEach(function(sftptask) {
+          grunt.task.run('sftp-deploy:' + sftptask);
         });
-      });
+      }
+      if ( sshelements ) {
+        sshelements.forEach(function(sshtask) {
+          grunt.task.run('sshexec:' + sshtask);
+        });
+      }
     });
   });
   // Default task.
