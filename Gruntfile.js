@@ -43,11 +43,16 @@ module.exports = function(grunt) {
     
     configs.forEach(function(config) {
       var tasks = Object.keys(elements[config]);
+      var tasksresult = true;
       tasks.forEach(function(task) {
         var details = Object.keys(elements[config][task])
         grunt.config.set(task, elements[config][task]);
         details.forEach(function(value){
-          grunt.task.run(task +':' + value);
+          var res;
+          res = grunt.task.run(task +':' + value);
+          if ( !res ) {
+            grunt.fail.warn(new Error('Configuration:' + config + ' task ' + task + ' with value ' + value + 'failed !'));
+          }
         });
       });
     });
