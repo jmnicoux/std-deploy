@@ -13,8 +13,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', function () {
     var deploy = process.env.DEPLOY && process.env.DEPLOY || '',
-    var build_env = process.env.BUILD_ENV && process.env.BUILD_ENV || 'deployment',
-    var target = process.env.TARGET && process.env.TARGET || '';
+    build_env = process.env.BUILD_ENV && process.env.BUILD_ENV || 'deployment',
+    target = process.env.TARGET && process.env.TARGET || '';
     config;
     if ( deploy === '' ) {
       return false;
