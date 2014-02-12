@@ -49,7 +49,7 @@ module.exports = function(grunt) {
         details.forEach(function(value){
           grunt.task.run(task +':' + value);
         });
-      })
+      });
     });
   });
   // Default task.
