@@ -18,7 +18,7 @@ module.exports = function(grunt) {
     config;
     if ( deploy === '' ) {
       return false;
-    }l
+    }
     var sshlist = grunt.file.readJSON('../.' + build_env + '_config_' + deploy + '.json');
     if ( !sshlist ) {
       return false;
