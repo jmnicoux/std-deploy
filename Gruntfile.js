@@ -45,7 +45,7 @@ module.exports = function(grunt) {
       var tasks = Object.keys(elements[config]);
       tasks.forEach(function(task) {
         var details = Object.keys(elements[config][task])
-        grunt.config.set(task, element[config][task]);
+        grunt.config.set(task, elements[config][task]);
         details.forEach(function(value){
           grunt.task.run(task +':' + value);
         });
