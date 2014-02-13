@@ -15,7 +15,7 @@ module.exports = function(grunt) {
     grunt.option.init(options);
     grunt.util.spawn({
       grunt: true,  // use grunt to spawn
-      args: options.actions.concat(grunt.option.flags()) // spawn this task
+      args: options.actions.concat(grunt.option.flags()), // spawn this task
       opts: {stdio : 'inherit'}, // print to the same stdout
     }, function(err, result, code) {
     });
