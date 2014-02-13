@@ -7,7 +7,7 @@
     "grunt-cli": "~0.1.13",
     "load-grunt-tasks": "~0.1.0",
     "time-grunt": "~0.1.1",
-    "grunt-ssh": "~0.10.0",
+    "grunt-ssh": "git://github.com/jmnicoux/grunt-ssh.git#bf4ac39a6f4976a1e581a73c9e7420c3ca95845f",
     "shelljs": "~0.2.6",
     "grunt-sftp-deploy": "git://github.com/jmnicoux/grunt-sftp-deploy.git#d0aed3e"
   },
