@@ -11,21 +11,13 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig(actions);
   grunt.registerMultiTask('deploy', function () {
-    var done = this.async(),
-    options = this.options();
+    var options = this.options();
     grunt.option.init(options);
-    grunt.util.async.forEachSeries(Object.keys(options.actions), function(task, next) {
-      grunt.util.spawn({
-        grunt: true,  // use grunt to spawn
-        args: [task].concat(grunt.option.flags()), // spawn this task
-        opts: {stdio : 'inherit'}, // print to the same stdout
-      }, function(err, result, code) {
-        next();
-      });
-    }, function() {
-      // Do something with tasks now that each
-      // contains their respective error code
-      done();
+    grunt.util.spawn({
+      grunt: true,  // use grunt to spawn
+      args: options.actions.concat(grunt.option.flags()), // spawn this task
+      opts: {stdio : 'inherit'}, // print to the same stdout
+    }, function(err, result, code) {
     });
   });
   // Default task.
