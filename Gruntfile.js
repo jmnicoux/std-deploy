@@ -6,12 +6,13 @@ module.exports = function(grunt) {
   var deploy = process.env.DEPLOY && process.env.DEPLOY || '',
   build_env = process.env.BUILD_ENV && process.env.BUILD_ENV || 'deployment',
   build_type = process.env.BUILD_TYPE && process.env.BUILD_TYPE || 'package',
-  actions = grunt.file.readJSON('../.' + build_env + '_actions_' + deploy + '.json');
-  actions.deploy = grunt.file.readJSON('../.' + build_env + '_config_' + deploy + '.json');
+  actions = grunt.file.readJSON('../.' + build_env + '_actions_' + deploy + '.json'),
+  build_config = grunt.file.readJSON('../.' + build_env + '_config_' + deploy + '.json');
+  actions.deploy = build_config[build_type];
 
   // Project configuration.
   grunt.initConfig(actions);
-  grunt.registerMultiTask('deploy:' + build_type, function () {
+  grunt.registerMultiTask('deploy', function () {
     var options = this.options();
     grunt.option.init(options);
     grunt.util.spawn({
