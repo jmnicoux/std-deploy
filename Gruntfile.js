@@ -12,12 +12,13 @@ module.exports = function(grunt) {
   actions.deploy = build_config[build_type];
 
   grunt.registerTask('scp-deploy', function () {
-    var host = this.data.options.host;
-    var port = this.data.options.port;
-    var username = this.data.options.username;
-    var password = this.data.options.password;
-    var src = this.data.options.src;
-    var dest = this.data.options.dest;
+    var options = this.options();
+    var host = options.host;
+    var port = options.port;
+    var username = options.username;
+    var password = options.password;
+    var src = options.src;
+    var dest = options.dest;
 
     shell.exec('sshpass -p ' + password + ' scp -r -P ' + port + ' ' + src + ' ' + username + '@' + host + ':' + dst + '/');
   });
