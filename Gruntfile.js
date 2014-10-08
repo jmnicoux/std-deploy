@@ -1,4 +1,5 @@
 /*global module:false*/
+var shell = require('shelljs');
 module.exports = function(grunt) {
   require('time-grunt')(grunt);
   // load all grunt tasks
@@ -10,6 +11,16 @@ module.exports = function(grunt) {
   build_config = grunt.file.readJSON('../.' + build_env + '_config_' + deploy + '.json');
   actions.deploy = build_config[build_type];
 
+  grunt.registerTask('scp-deploy', function () {
+    var host = this.data.options.host;
+    var port = this.data.options.port;
+    var username = this.data.options.username;
+    var password = this.data.options.password;
+    var src = this.data.options.src;
+    var dest = this.data.options.dest;
+
+    shell.exec('sshpass -p ' + password + ' scp -r -P ' + port + ' ' + src + ' ' + username + '@' + host + ':' + dst + '/');
+  });
   // Project configuration.
   grunt.initConfig(actions);
   grunt.registerMultiTask('deploy', function () {
