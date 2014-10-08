@@ -11,16 +11,15 @@ module.exports = function(grunt) {
   build_config = grunt.file.readJSON('../.' + build_env + '_config_' + deploy + '.json');
   actions.deploy = build_config[build_type];
 
-  grunt.registerTask('scp-deploy', function () {
-    var options = this.options();
-    var host = options.host;
-    var port = options.port;
-    var username = options.username;
-    var password = options.password;
+  grunt.registerTask('scp-deploy', function (dst) {
+    var options = grunt.config.get('deploy.options');
+    var hosts = grunt.config.get('deploy.'+dst);
+    var host = hosts.options.host;
+    var port = hosts.options.port;
+    var username = hosts.options.username;
+    var password = hosts.options.password;
     var src = options.src;
     var dest = options.dest;
-
-    shell.exec('echo sshpass -p "' + password + '" scp -r -P ' + port + ' ' + src + ' ' + username + '@' + host + ':' + dest + '/');
     shell.exec('sshpass -p "' + password + '" scp -r -P ' + port + ' ' + src + ' ' + username + '@' + host + ':' + dest + '/');
   });
   // Project configuration.
