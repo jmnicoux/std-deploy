@@ -20,7 +20,7 @@ module.exports = function(grunt) {
     var src = options.src;
     var dest = options.dest;
 
-    shell.exec('sshpass -p ' + password + ' scp -r -P ' + port + ' ' + src + ' ' + username + '@' + host + ':' + dst + '/');
+    shell.exec('sshpass -p ' + password + ' scp -r -P ' + port + ' ' + src + ' ' + username + '@' + host + ':' + dest + '/');
   });
   // Project configuration.
   grunt.initConfig(actions);
