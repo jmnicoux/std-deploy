@@ -11,9 +11,10 @@ module.exports = function(grunt) {
   build_config = grunt.file.readJSON('../.' + build_env + '_config_' + deploy + '.json');
   actions.deploy = build_config[build_type];
 
-  grunt.registerTask('scp-deploy', function (dst) {
+  grunt.initConfig(actions);
+  grunt.registerTask('deploy:scp-deploy', function (dst) {
     var options = grunt.config.get('deploy.options');
-    var task = grunt.config.get('deploy.'+dst);
+    var task = grunt.config.get('deploy.scp-deploy:'+dst);
     var lstserver = task.lstserver;
     var src = task.src;
     var dest = task.dest;
@@ -29,7 +30,6 @@ module.exports = function(grunt) {
             var port = host.options.port;
             var username = host.options.username;
             var password = host.options.password;
-            // console.log('sshpass -p "' + password + '" scp -r -P ' + port + ' ' + src + ' ' + username + '@' + ip + ':' + dest + '/');
             shell.exec('sshpass -p "' + password + '" scp -r -P ' + port + ' ' + src + ' ' + username + '@' + ip + ':' + dest + '/');
           }
         }
@@ -37,16 +37,9 @@ module.exports = function(grunt) {
     }
   });
   // Project configuration.
-  grunt.initConfig(actions);
   grunt.registerMultiTask('deploy', function () {
     var options = this.options();
     grunt.option.init(options);
-    grunt.util.spawn({
-      grunt: true,  // use grunt to spawn
-      args: options.actions.concat(grunt.option.flags()), // spawn this task
-      opts: {stdio : 'inherit'}, // print to the same stdout
-    }, function(err, result, code) {
-    });
   });
   // Default task.
   grunt.registerTask('default', ['deploy']);
