@@ -13,14 +13,28 @@ module.exports = function(grunt) {
 
   grunt.registerTask('scp-deploy', function (dst) {
     var options = grunt.config.get('deploy.options');
-    var hosts = grunt.config.get('deploy.'+dst);
-    var host = hosts.options.host;
-    var port = hosts.options.port;
-    var username = hosts.options.username;
-    var password = hosts.options.password;
-    var src = options.src;
-    var dest = options.dest;
-    shell.exec('sshpass -p "' + password + '" scp -r -P ' + port + ' ' + src + ' ' + username + '@' + host + ':' + dest + '/');
+    var task = grunt.config.get('deploy.'+dst);
+    var lstserver = task.lstserver;
+    var src = task.src;
+    var dest = task.dest;
+    for (var index in lstserver){
+      if (lstserver.hasOwnProperty(index)) {
+        var srv = lstserver[index];
+        var hosts = options.lstserver;
+        var result = hosts.filter( function(o){return o.hasOwnProperty(srv); } );
+        if (result) {
+          var host = result[0][srv];
+          if (host) {
+            var ip = host.options.host;
+            var port = host.options.port;
+            var username = host.options.username;
+            var password = host.options.password;
+            // console.log('sshpass -p "' + password + '" scp -r -P ' + port + ' ' + src + ' ' + username + '@' + ip + ':' + dest + '/');
+            shell.exec('sshpass -p "' + password + '" scp -r -P ' + port + ' ' + src + ' ' + username + '@' + ip + ':' + dest + '/');
+          }
+        }
+      }
+    }
   });
   // Project configuration.
   grunt.initConfig(actions);
