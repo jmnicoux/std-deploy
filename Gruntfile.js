@@ -12,6 +12,29 @@ module.exports = function(grunt) {
   actions.deploy = build_config[build_type];
 
   grunt.initConfig(actions);
+  grunt.registerTask('deploy:ssh-deploy', function (dst) {
+    var options = grunt.config.get('deploy.options');
+    var task = grunt.config.get('deploy.ssh-deploy:'+dst);
+    var lstserver = task.lstserver;
+    var cmd = task.cmd;
+    for (var index in lstserver){
+      if (lstserver.hasOwnProperty(index)) {
+        var srv = lstserver[index];
+        var hosts = options.lstserver;
+        var result = hosts.filter( function(o){return o.hasOwnProperty(srv); } );
+        if (result) {
+          var host = result[0][srv];
+          if (host) {
+            var ip = host.options.host;
+            var port = host.options.port;
+            var username = host.options.username;
+            var password = host.options.password;
+            shell.exec('sshpass -p "' + password + '" ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -p ' + port + ' ' + username + '@' + ip + ' "' + cmd + '"' );
+          }
+        }
+      }
+    }
+  });
   grunt.registerTask('deploy:scp-deploy', function (dst) {
     var options = grunt.config.get('deploy.options');
     var task = grunt.config.get('deploy.scp-deploy:'+dst);
