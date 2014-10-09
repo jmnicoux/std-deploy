@@ -29,7 +29,7 @@ module.exports = function(grunt) {
             var port = host.options.port;
             var username = host.options.username;
             var password = host.options.password;
-            shell.exec('sshpass -p "' + password + '" ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -p ' + port + ' ' + username + '@' + ip + ' "' + cmd + '"' );
+            shell.exec('sshpass -p "' + password + '" ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -p ' + port + ' ' + username + '@' + ip + ' \'' + cmd + '\'' );
           }
         }
       }
