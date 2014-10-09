@@ -53,7 +53,7 @@ module.exports = function(grunt) {
             var port = host.options.port;
             var username = host.options.username;
             var password = host.options.password;
-            shell.exec('sshpass -p "' + password + '" scp -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -r -P ' + port + ' ' + src + ' ' + username + '@' + ip + ':' + dest + '/');
+            shell.exec('sshpass -p "' + password + '" scp -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -r -P ' + port + ' ' + src + ' ' + username + '@' + ip + ':' + dest);
           }
         }
       }
