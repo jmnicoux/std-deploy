@@ -21,7 +21,15 @@ module.exports = function(grunt) {
       if (lstserver.hasOwnProperty(index)) {
         var srv = lstserver[index];
         var hosts = options.lstserver;
-        var result = hosts.filter( function(o){return o.hasOwnProperty(srv); } );
+        var result = hosts.filter( function (o) 
+        {
+          if(process.env.TARGET && process.env.TARGET != "" && process.env.TARGET === srv ) {
+            return o.hasOwnProperty(srv);
+          }
+          if(!process.env.TARGET || process.env.TARGET === "") {
+            return o.hasOwnProperty(srv);
+          }
+        });
         if (result) {
           var host = result[0][srv];
           if (host) {
@@ -45,7 +53,15 @@ module.exports = function(grunt) {
       if (lstserver.hasOwnProperty(index)) {
         var srv = lstserver[index];
         var hosts = options.lstserver;
-        var result = hosts.filter( function(o){return o.hasOwnProperty(srv); } );
+        var result = hosts.filter( function (o) 
+        {
+          if(process.env.TARGET && process.env.TARGET != "" && process.env.TARGET === srv ) {
+            return o.hasOwnProperty(srv);
+          }
+          if(!process.env.TARGET || process.env.TARGET === "") {
+            return o.hasOwnProperty(srv);
+          }
+        });
         if (result) {
           var host = result[0][srv];
           if (host) {
