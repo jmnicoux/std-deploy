@@ -7,11 +7,11 @@
     "grunt-cli": "~0.1.13",
     "load-grunt-tasks": "~0.1.0",
     "time-grunt": "~0.1.1",
-    "shelljs": "~0.2.6",
+    "shelljs": "~0.2.6"
   },
   "company": "MOOD:",
   "name": "deployment",
   "private": "true",
   "startEdit": "2014",
-  "version": "0.0.13"
+  "version": "0.0.14"
 }
