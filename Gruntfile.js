@@ -76,10 +76,10 @@ module.exports = function(grunt) {
     var options = grunt.config.get('deploy.options');
     var task = grunt.config.get('deploy.ssh-deploy:'+dst);
     var lstservertask = task.lstserver;
-    if (!TARGET && !lstservertask) {
+    if (!TARGET && (!lstservertask || lstservertask==undefined)) {
       return true;
     }
-    if (TARGET && TARGET !== "" && lstservertask && lstservertask.indexOf(TARGET) === -1) {
+    if (TARGET && TARGET !== "" && lstservertask && lstservertask!=undefined && lstservertask.indexOf(TARGET) === -1) {
       return true;
     }
     var hosts = options.lstserver;
