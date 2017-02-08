@@ -47,6 +47,13 @@ module.exports = function(grunt) {
           grunt.config.set('TARGET', index);
           task = grunt.config.get('deploy.ssh-deploy:'+dst);
           if (host) {
+            if (process.env.DEPLOYHOST) {
+              host.host=process.env.DEPLOYHOST;
+              host.username=process.env.DEPLOYUSER;
+              host.port=process.env.DEPLOYPORT;
+              host.key=process.env.DEPLOYKEY;
+              delete host.password;
+            }
             if (!host.host || !host.username) {
               return false;
             }
